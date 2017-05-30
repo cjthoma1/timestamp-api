@@ -1,7 +1,8 @@
 var express = require("express");
 var app = express();
-
-app.get('/', (req, res) =>{
+var path = require('path');
+app.use(express.static(path.resolve(__dirname, 'client')))
+app.get('/hello', (req, res) =>{
     res.send("Hello World!");
 })
 
