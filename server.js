@@ -1,6 +1,7 @@
 var express = require("express"),
 app = express(),
-path = require('path');
+path = require('path'),
+port = process.env.PORT || '8080';
  
 app.use(express.static(path.resolve(__dirname, 'client')))
 app.get('/:number', (req, res) =>{
@@ -12,7 +13,7 @@ app.get('/:number', (req, res) =>{
          unix = date.getTime()/1000,
          dateObj = {"unix": unix, "natural": natural};
          
-        return res.send(dateObj);
+        return res.json(dateObj);
        
     }
     else{
@@ -26,6 +27,6 @@ app.get("*", function(req, res) {
   res.end("404");
 });
 
-app.listen('8080', () => {
+app.listen(port, () => {
     console.log('Example app listening on port 8080!')
 })
