@@ -1,16 +1,22 @@
-var express = require("express");
-var app = express();
-var path = require('path');
+var express = require("express"),
+app = express(),
+path = require('path');
+ 
 app.use(express.static(path.resolve(__dirname, 'client')))
 app.get('/:number', (req, res) =>{
-    var param =  req.params.number.toString();
+    var param =  req.params.number.toString()
+    
     if(new Date(param)) {
-         var date = new Date(param) 
-        return res.send(JSON.stringify({"unix": date.getTime(), "natural": date.getMonth()+" "+ date.getDay()+ ", " + date.getFullYear()}));
+         var date = new Date(param), 
+         natural= date.toLocaleString("en-us", { month: "long", day: 'numeric',  year: 'numeric'}), 
+         dateObj = {"unix": date.getTime(), "natural": natural};
+         
+        return res.send(dateObj);
        
     }
     else{
-        return res.end(JSON.stringify({"unix": null, "natural": null}));
+         dateObj = {"unix": null, "natural": null}
+        return res.send(dateObj);
     }
    
 })
