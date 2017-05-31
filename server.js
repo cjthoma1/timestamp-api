@@ -4,12 +4,13 @@ path = require('path');
  
 app.use(express.static(path.resolve(__dirname, 'client')))
 app.get('/:number', (req, res) =>{
-    var param =  req.params.number.toString()
+    var param =  parseInt(req.params.number) ? req.params.number*1000 : req.params.number.toString();
     
     if(new Date(param)) {
          var date = new Date(param), 
          natural= date.toLocaleString("en-us", { month: "long", day: 'numeric',  year: 'numeric'}), 
-         dateObj = {"unix": date.getTime(), "natural": natural};
+         unix = date.getTime()/1000,
+         dateObj = {"unix": unix, "natural": natural};
          
         return res.send(dateObj);
        
