@@ -3,12 +3,14 @@ var app = express();
 var path = require('path');
 app.use(express.static(path.resolve(__dirname, 'client')))
 app.get('/:number', (req, res) =>{
-    var date =  req.params.number
-    if(parseInt(date)) {
-        return res.send("Hello " + date +"!");
+    var param =  req.params.number.toString();
+    if(new Date(param)) {
+         var date = new Date(param) 
+        return res.send(JSON.stringify({"unix": date.getTime(), "natural": date.getMonth()+" "+ date.getDay()+ ", " + date.getFullYear()}));
+       
     }
     else{
-        return res.end('NULL');
+        return res.end(JSON.stringify({"unix": null, "natural": null}));
     }
    
 })
